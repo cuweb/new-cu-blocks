@@ -21,7 +21,8 @@
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function create_block_test_block_init() {
-	// register_block_type( __DIR__ . '/build/block-one' );
-	// register_block_type( __DIR__ . '/build/block-two' );
+	register_block_type( __DIR__ . '/build/block-one' );
+	register_block_type( __DIR__ . '/build/block-two' );
+	register_block_type( __DIR__ . '/build/block-three' );
 }
 add_action( 'init', 'create_block_test_block_init' );
