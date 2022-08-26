@@ -26,3 +26,18 @@ function create_block_test_block_init() {
 	register_block_type( __DIR__ . '/build/block-three' );
 }
 add_action( 'init', 'create_block_test_block_init' );
+
+/**
+ * Add script to the block editor.
+ *
+ * @return void
+ */
+function remove_block_style() {
+	// Register the block editor script.
+	wp_register_script( 'remove-block-style', plugin_dir_url(__FILE__) . '/js/remove-block-styles.js', [ 'wp-blocks', 'wp-edit-post' ] );
+	// register block editor script.
+	register_block_type( 'remove/block-style', [
+		'editor_script' => 'remove-block-style',
+	] );
+}
+add_action( 'init', 'remove_block_style' );
