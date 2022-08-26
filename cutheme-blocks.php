@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       cuTheme Blocks
+ * Plugin Name:       CU Blocks
  * Description:       Example static block scaffolded with Create Block tool.
  * Requires at least: 5.9
  * Requires PHP:      7.0
@@ -12,6 +12,16 @@
  *
  * @package           create-block
  */
+
+/**
+ * Add script to the block editor.
+ * https://soderlind.no/hide-block-styles-in-gutenberg/
+ */
+function remove_block_style() {
+	wp_register_script( 'remove-block-style', plugin_dir_url(__DIR__) . 'cu-blocks/js/remove-block-styles.js', [ 'wp-blocks', 'wp-edit-post' ] ); // Register the block editor script.
+	register_block_type( 'remove/block-style', ['editor_script' => 'remove-block-style'] ); // register block editor script.
+}
+add_action( 'init', 'remove_block_style' );
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -27,17 +37,6 @@ function create_block_test_block_init() {
 }
 add_action( 'init', 'create_block_test_block_init' );
 
-/**
- * Add script to the block editor.
- *
- * @return void
- */
-function remove_block_style() {
-	// Register the block editor script.
-	wp_register_script( 'remove-block-style', plugin_dir_url(__FILE__) . '/js/remove-block-styles.js', [ 'wp-blocks', 'wp-edit-post' ] );
-	// register block editor script.
-	register_block_type( 'remove/block-style', [
-		'editor_script' => 'remove-block-style',
-	] );
-}
-add_action( 'init', 'remove_block_style' );
+
+// Include support functions
+include(plugin_dir_url(__DIR__) . 'cu-blocks/supports/theme-supports.php');
