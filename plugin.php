@@ -19,8 +19,8 @@
  * https://soderlind.no/hide-block-styles-in-gutenberg/
  */
 function remove_block_style() {
-	wp_register_script( 'remove-block-style', plugin_dir_url(__DIR__) . 'cu-blocks/js/remove-block-styles.js', [ 'wp-blocks', 'wp-edit-post' ] ); // Register the block editor script.
-	register_block_type( 'remove/block-style', ['editor_script' => 'remove-block-style'] ); // register block editor script.
+	wp_register_script( 'block-config', plugin_dir_url(__DIR__) . 'cu-blocks/js/block-config.js', [ 'wp-blocks', 'wp-edit-post' ] ); // Register the block editor script.
+	register_block_type( 'remove/block-style', ['editor_script' => 'block-config'] ); // register block editor script.
 }
 add_action( 'init', 'remove_block_style' );
 
@@ -52,7 +52,7 @@ add_action( 'init', 'create_block_test_block_init' );
 function set_allowed_blocks( $allowed_blocks, $editor_context ) {
 	// Register core blocks
     $core_blocks = [
-        // 'core/embed',
+        'core/embed',
         'core/gallery',
         'core/heading',
         'core/image',
@@ -72,7 +72,7 @@ function set_allowed_blocks( $allowed_blocks, $editor_context ) {
     // Register admin specific blocks
     $admin_blocks = [];
     if (current_user_can('administrator')) {
-        $admin_blocks = ['core/html', 'core/shortcode', 'core/code'];
+        $admin_blocks = ['core/html', 'core/shortcode'];
     }
 
     // Register plugin specific blocks
@@ -91,23 +91,3 @@ function set_allowed_blocks( $allowed_blocks, $editor_context ) {
     return $allowed_blocks;
 }
 add_filter( 'allowed_block_types_all', 'set_allowed_blocks', 25, 2 );
-
-
-/**
- * Remove code view for non-administrators
- *
- * @package Blocks
- * @category Gutenberg Supports
- * @version 1.0
- * @see https://developer.wordpress.org/reference/hooks/block_editor_settings_all/
- */
-// function customEditorSettings($settings, $post)
-// {
-//     $settings['codeEditingEnabled'] = false;
-//     if (current_user_can('administrator')) {
-//         $settings['codeEditingEnabled'] = false;
-//     }
-
-//     return $settings;
-// }
-// add_filter('block_editor_settings_all', 'customEditorSettings', 10, 2);
