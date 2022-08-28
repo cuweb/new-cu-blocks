@@ -1,5 +1,14 @@
 wp.domReady(() => {
+	// Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
+	wp.blocks.getBlockTypes().forEach((block) => {
+		if (_.isArray(block['styles'])) {
+			console.log(block.name, _.pluck(block['styles'], 'name'));
+		}
+	});
+	
 	const allowedCoreBlocks = [
+		'core/column',
+		'core/columns',
 		'core/embed',
 		'core/gallery',
 		'core/heading',
@@ -55,12 +64,12 @@ wp.domReady(() => {
 	wp.blocks.unregisterBlockStyle('core/table', 'regular');
 	wp.blocks.unregisterBlockStyle('core/table', 'stripes');
 	
-	// Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
-	wp.blocks.getBlockTypes().forEach((block) => {
-		if (_.isArray(block['styles'])) {
-			console.log(block.name, _.pluck(block['styles'], 'name'));
-		}
-	});
+	// // Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
+	// wp.blocks.getBlockTypes().forEach((block) => {
+	// 	if (_.isArray(block['styles'])) {
+	// 		console.log(block.name, _.pluck(block['styles'], 'name'));
+	// 	}
+	// });
 });
 
 //
