@@ -13,13 +13,16 @@
  * @package           create-block
  */
 
-
 /**
  * Add script to the block editor.
  * https://soderlind.no/hide-block-styles-in-gutenberg/
  */
 function remove_block_style() {
-	wp_register_script( 'block-config', plugin_dir_url(__DIR__) . 'cu-blocks/js/block-config.js', [ 'wp-blocks', 'wp-edit-post' ] ); // Register the block editor script.
+	wp_register_script(
+		'block-config',
+		plugin_dir_url( __FILE__ ) . '/src/script.js',
+		[ 'wp-blocks', 'wp-edit-post' ]
+	);
 	register_block_type( 'remove/block-style', ['editor_script' => 'block-config'] ); // register block editor script.
 }
 add_action( 'init', 'remove_block_style' );
@@ -33,8 +36,7 @@ add_action( 'init', 'remove_block_style' );
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function create_block_test_block_init() {
-	register_block_type( __DIR__ . '/build/block-one' );
-	register_block_type( __DIR__ . '/build/block-two' );
-	register_block_type( __DIR__ . '/build/block-three' );
+	register_block_type( __DIR__ . '/build/feature-card' );
+	register_block_type( __DIR__ . '/build/hero-image' );
 }
 add_action( 'init', 'create_block_test_block_init' );
