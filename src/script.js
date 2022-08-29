@@ -7,8 +7,11 @@ wp.domReady(() => {
 	});
 	
 	const allowedCoreBlocks = [
+		'core/button',
+		'core/buttons',
 		'core/column',
 		'core/columns',
+		'core/cover',
 		'core/embed',
 		'core/gallery',
 		'core/heading',
@@ -63,13 +66,6 @@ wp.domReady(() => {
 	wp.blocks.unregisterBlockStyle('core/quote', 'plain');
 	wp.blocks.unregisterBlockStyle('core/table', 'regular');
 	wp.blocks.unregisterBlockStyle('core/table', 'stripes');
-	
-	// // Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
-	// wp.blocks.getBlockTypes().forEach((block) => {
-	// 	if (_.isArray(block['styles'])) {
-	// 		console.log(block.name, _.pluck(block['styles'], 'name'));
-	// 	}
-	// });
 });
 
 //
@@ -94,6 +90,16 @@ function extendCoreBlocks(settings, name) {
 	// }
 
 	// Core list block modifications
+	if (name === 'core/button') {
+		return lodash.assign({}, settings, {
+			supports: lodash.assign({}, settings.supports, {
+				color: false,
+				typography: false,
+			}),
+		});
+	}
+	
+	// Core list block modifications
 	if (name === 'core/list') {
 		return lodash.assign({}, settings, {
 			supports: lodash.assign({}, settings.supports, {
@@ -105,6 +111,15 @@ function extendCoreBlocks(settings, name) {
 
 	// Core quote block modifications
 	if (name === 'core/quote') {
+		return lodash.assign({}, settings, {
+			supports: lodash.assign({}, settings.supports, {
+				color: false,
+			}),
+		});
+	}
+	
+	// Core table block modifications
+	if (name === 'core/table') {
 		return lodash.assign({}, settings, {
 			supports: lodash.assign({}, settings.supports, {
 				color: false,
