@@ -17,7 +17,9 @@ wp.domReady(() => {
 		'core/heading',
 		'core/image',
 		'core/list',
+		'core/media-text',
 		'core/paragraph',
+		'core/query-block',
 		'core/quote',
 		'core/table'
 	];
@@ -45,19 +47,19 @@ wp.domReady(() => {
 		'vimeo'
 	];
 	
-	// Set allowed blocks
-	wp.blocks.getBlockTypes().forEach(function (coreBlocks) {
-		if (allowedBlocks.indexOf(coreBlocks.name) === -1) {
-			wp.blocks.unregisterBlockType(coreBlocks.name);
-		}
-	});
+	// // Set allowed blocks
+	// wp.blocks.getBlockTypes().forEach(function (coreBlocks) {
+	// 	if (allowedBlocks.indexOf(coreBlocks.name) === -1) {
+	// 		wp.blocks.unregisterBlockType(coreBlocks.name);
+	// 	}
+	// });
 
-	// Set allowed embed blocks - https://wordpress.stackexchange.com/questions/393243/limit-gutenberg-blocks-available-to-users-to-choose-from
-	wp.blocks.getBlockType('core/embed').variations.forEach(function (blockVariation) {
-		if (allowedEmbedBlocks.indexOf(blockVariation.name) === -1) {
-			wp.blocks.unregisterBlockVariation('core/embed', blockVariation.name);
-		}
-	});
+	// // Set allowed embed blocks - https://wordpress.stackexchange.com/questions/393243/limit-gutenberg-blocks-available-to-users-to-choose-from
+	// wp.blocks.getBlockType('core/embed').variations.forEach(function (blockVariation) {
+	// 	if (allowedEmbedBlocks.indexOf(blockVariation.name) === -1) {
+	// 		wp.blocks.unregisterBlockVariation('core/embed', blockVariation.name);
+	// 	}
+	// });
 
 	// Remove block styles
 	wp.blocks.unregisterBlockStyle('core/image', 'default');
