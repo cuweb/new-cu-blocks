@@ -1,11 +1,11 @@
 wp.domReady(() => {
 	// Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
-	wp.blocks.getBlockTypes().forEach((block) => {
-		if (_.isArray(block['styles'])) {
-			console.log(block.name, _.pluck(block['styles'], 'name'));
-		}
-	});
-	
+	// wp.blocks.getBlockTypes().forEach((block) => {
+	// 	if (_.isArray(block['styles'])) {
+	// 		console.log(block.name, _.pluck(block['styles'], 'name'));
+	// 	}
+	// });
+
 	const allowedCoreBlocks = [
 		'core/button',
 		'core/buttons',
@@ -16,28 +16,39 @@ wp.domReady(() => {
 		'core/gallery',
 		'core/heading',
 		'core/image',
+		'core/latest-posts',
 		'core/list',
 		'core/media-text',
 		'core/paragraph',
-		'core/query-block',
 		'core/quote',
-		'core/table'
+		'core/table',
+		// All below are needed for query loop
+		// 'core/query',
+		// 'core/post-title',
+		// 'core/post-date',
+		// 'core/post-template',
+		// 'core/query-pagination',
+		// 'core/query-pagination-previous',
+		// 'core/query-pagination-numbers',
+		// 'core/query-pagination-next',
+		// 'core/query-no-results',
+		// 'core/missing',
 	];
-	
+
 	const allowedCustomBlocks = [
 		'starter-block/feature-card',
 		'starter-block/hero-image'
 	];
-	
+
 	const allowedAdminBlocks = [
 		'core/html',
 		'core/shortcode'
 	];
-	
+
 	const allowedPluginBlocks = [
 		// 'gravityforms/form'
 	];
-	
+
 	const allowedBlocks = allowedCoreBlocks.concat(allowedCustomBlocks, allowedAdminBlocks, allowedPluginBlocks);
 
 	const allowedEmbedBlocks = [
@@ -46,20 +57,20 @@ wp.domReady(() => {
 		'youtube',
 		'vimeo'
 	];
-	
-	// // Set allowed blocks
-	// wp.blocks.getBlockTypes().forEach(function (coreBlocks) {
-	// 	if (allowedBlocks.indexOf(coreBlocks.name) === -1) {
-	// 		wp.blocks.unregisterBlockType(coreBlocks.name);
-	// 	}
-	// });
 
-	// // Set allowed embed blocks - https://wordpress.stackexchange.com/questions/393243/limit-gutenberg-blocks-available-to-users-to-choose-from
-	// wp.blocks.getBlockType('core/embed').variations.forEach(function (blockVariation) {
-	// 	if (allowedEmbedBlocks.indexOf(blockVariation.name) === -1) {
-	// 		wp.blocks.unregisterBlockVariation('core/embed', blockVariation.name);
-	// 	}
-	// });
+	// Set allowed blocks
+	wp.blocks.getBlockTypes().forEach(function (coreBlocks) {
+		if (allowedBlocks.indexOf(coreBlocks.name) === -1) {
+			wp.blocks.unregisterBlockType(coreBlocks.name);
+		}
+	});
+
+	// Set allowed embed blocks - https://wordpress.stackexchange.com/questions/393243/limit-gutenberg-blocks-available-to-users-to-choose-from
+	wp.blocks.getBlockType('core/embed').variations.forEach(function (blockVariation) {
+		if (allowedEmbedBlocks.indexOf(blockVariation.name) === -1) {
+			wp.blocks.unregisterBlockVariation('core/embed', blockVariation.name);
+		}
+	});
 
 	// Remove block styles
 	wp.blocks.unregisterBlockStyle('core/image', 'default');
@@ -100,7 +111,7 @@ function extendCoreBlocks(settings, name) {
 			}),
 		});
 	}
-	
+
 	// Core list block modifications
 	if (name === 'core/list') {
 		return lodash.assign({}, settings, {
@@ -119,7 +130,7 @@ function extendCoreBlocks(settings, name) {
 			}),
 		});
 	}
-	
+
 	// Core table block modifications
 	if (name === 'core/table') {
 		return lodash.assign({}, settings, {

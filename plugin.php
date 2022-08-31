@@ -15,7 +15,6 @@
 
 /**
  * Add script to the block editor.
- * https://soderlind.no/hide-block-styles-in-gutenberg/
  */
 function remove_block_style() {
 	wp_register_script(
