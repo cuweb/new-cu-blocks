@@ -72,7 +72,7 @@ wp.domReady(() => {
 		}
 	});
 
-	// Remove block styles
+	// Remove block styles - https://stackoverflow.com/questions/71637137/remove-property-from-wordpress-core-gutenberg-block
 	wp.blocks.unregisterBlockStyle('core/image', 'default');
 	wp.blocks.unregisterBlockStyle('core/image', 'rounded');
 	wp.blocks.unregisterBlockStyle('core/quote', 'default');
@@ -83,23 +83,58 @@ wp.domReady(() => {
 
 //
 // Remove other editor panels
-
 wp.data.dispatch('core/edit-post').removeEditorPanel('discussion-panel');
 
 //
 // Remove core block elements via the block support API
 // @see https://css-tricks.com/a-crash-course-in-wordpress-block-filters/
-// @see https://stackoverflow.com/questions/71637137/remove-property-from-wordpress-core-gutenberg-block
 // @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#typography
 // @see https://javascriptforwp.com/extending-wordpress-blocks/
 
 const { addFilter } = wp.hooks;
 const { assign, merge } = lodash;
 
-function extendCoreBlocks(settings, name) {
+function modifyCoreBlocks(settings, name) {
 	// Core heading block modifications
-	// if (name === 'core/heading') {
+	// if (name === 'core/paragraph') {
 	// 	console.log({ settings, name });
+	// }
+
+	// Core latest posts block modifications - https://wp-qa.com/changing-the-category-for-existing-gutenberg-blocks
+	if (name === "core/latest-posts") {
+		console.log({ settings, name });
+		return lodash.assign({}, settings, {
+			category: "listings",
+			attributes:{
+				columns: {
+					default: 3
+				},
+				displayFeaturedImage: {
+					default: true
+				},
+				displayPostDate: {
+					default: true
+				},
+				featuredImageSizeSlug: {
+					default: 'thumbnail'
+				},
+				postLayout: {
+					default: 'grid'
+				},
+				postsToShow: {
+					default: 6
+				}
+			}
+		});
+	}
+	
+	// TODO - doesn't work, how to remove h1, 5, 6
+	// Core heading block modifications
+	// if (name === "core/heading") {
+	// 	console.log({ settings, name });
+	// 	return lodash.assign({}, settings, {
+	// 		__experimentalSelector: "h2,h3,h4"
+	// 	});
 	// }
 
 	// Core list block modifications
@@ -146,5 +181,5 @@ function extendCoreBlocks(settings, name) {
 addFilter(
 	'blocks.registerBlockType',
 	'cuBlockModifications',
-	extendCoreBlocks,
+	modifyCoreBlocks,
 );
