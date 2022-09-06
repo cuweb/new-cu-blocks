@@ -96,46 +96,60 @@ const { assign, merge } = lodash;
 
 function modifyCoreBlocks(settings, name) {
 	// Core heading block modifications
-	// if (name === 'core/paragraph') {
+	// if (name === 'core/columns') {
 	// 	console.log({ settings, name });
 	// }
 
 	// Core latest posts block modifications - https://wp-qa.com/changing-the-category-for-existing-gutenberg-blocks
-	if (name === "core/latest-posts") {
-		console.log({ settings, name });
-		return lodash.assign({}, settings, {
-			category: "listings",
-			attributes:{
-				columns: {
-					default: 3
-				},
-				displayFeaturedImage: {
-					default: true
-				},
-				displayPostDate: {
-					default: true
-				},
-				featuredImageSizeSlug: {
-					default: 'thumbnail'
-				},
-				postLayout: {
-					default: 'grid'
-				},
-				postsToShow: {
-					default: 6
-				}
-			}
-		});
-	}
+	// if (name === "core/latest-posts") {
+	// 	return lodash.assign({}, settings, {
+	// 		category: "listings",
+	// 		attributes:{
+	// 			columns: {
+	// 				default: 3
+	// 			},
+	// 			displayFeaturedImage: {
+	// 				default: true
+	// 			},
+	// 			displayPostDate: {
+	// 				default: true
+	// 			},
+	// 			featuredImageSizeSlug: {
+	// 				default: 'thumbnail'
+	// 			},
+	// 			postLayout: {
+	// 				default: 'grid'
+	// 			},
+	// 			postsToShow: {
+	// 				default: 6
+	// 			}
+	// 		}
+	// 	});
+	// }
 	
 	// TODO - doesn't work, how to remove h1, 5, 6
 	// Core heading block modifications
-	// if (name === "core/heading") {
-	// 	console.log({ settings, name });
-	// 	return lodash.assign({}, settings, {
-	// 		__experimentalSelector: "h2,h3,h4"
-	// 	});
-	// }
+	if (name === "core/heading") {
+		return lodash.assign({}, settings, {
+			supports: lodash.assign({}, settings.supports, {
+				__experimentalSelector: "h2,h3,h4"
+			})
+		});
+	}
+
+	// Core list block modifications
+	if (name === 'core/columns') {
+		console.log({ settings, name });
+		return lodash.assign({}, settings, {
+			category: "text",
+			attributes: lodash.assign({}, settings.attributes, {
+				isStackedOnMobile: false,
+			}),
+			supports: lodash.assign({}, settings.supports, {
+				color: false,
+			})
+		});
+	}
 
 	// Core list block modifications
 	if (name === 'core/button') {
