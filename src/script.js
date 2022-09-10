@@ -139,7 +139,7 @@ function modifyCoreBlocks(settings, name) {
 
 	// Core list block modifications
 	if (name === 'core/columns') {
-		console.log({ settings, name });
+		// console.log({ settings, name });
 		return lodash.assign({}, settings, {
 			category: "text",
 			attributes: lodash.assign({}, settings.attributes, {
