@@ -16,15 +16,16 @@
 /**
  * Add script to the block editor.
  */
-function remove_block_style() {
-	wp_register_script(
-		'block-config',
-		plugin_dir_url( __FILE__ ) . '/src/script.js',
-		[ 'wp-blocks', 'wp-edit-post' ]
-	);
-	register_block_type( 'remove/block-style', ['editor_script' => 'block-config'] ); // register block editor script.
+function remove_block_style()
+{
+    wp_register_script(
+        'block-config',
+        plugin_dir_url(__FILE__) . '/src/script.js',
+        [ 'wp-blocks', 'wp-edit-post' ]
+    );
+    register_block_type('remove/block-style', ['editor_script' => 'block-config']); // register block editor script.
 }
-add_action( 'init', 'remove_block_style' );
+add_action('init', 'remove_block_style');
 
 
 /**
@@ -34,11 +35,12 @@ add_action( 'init', 'remove_block_style' );
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_test_block_init() {
-	register_block_type( __DIR__ . '/build/feature-card' );
-	register_block_type( __DIR__ . '/build/hero-image' );
+function create_block_test_block_init()
+{
+    register_block_type(__DIR__ . '/build/feature-card');
+    register_block_type(__DIR__ . '/build/hero-image');
 }
-add_action( 'init', 'create_block_test_block_init' );
+add_action('init', 'create_block_test_block_init');
 
 
 /**
@@ -48,9 +50,10 @@ add_action( 'init', 'create_block_test_block_init' );
  *
  * @return array
  */
-function gwg_block_categories( $categories ) {
-    $category_slugs = wp_list_pluck( $categories, 'slug' );
-    return in_array( 'gwg', $category_slugs, true ) ? $categories : array_merge(
+function gwg_block_categories($categories)
+{
+    $category_slugs = wp_list_pluck($categories, 'slug');
+    return in_array('gwg', $category_slugs, true) ? $categories : array_merge(
         $categories,
         array(
             array(
@@ -61,4 +64,4 @@ function gwg_block_categories( $categories ) {
         )
     );
 }
-add_filter( 'block_categories', 'gwg_block_categories' );
+add_filter('block_categories', 'gwg_block_categories');
