@@ -21,6 +21,9 @@ wp.domReady(() => {
 		}
 	});
 
+    // Unregister core blocks
+    // wp.blocks.unregisterBlockType( 'core/heading' );
+
 	// Remove block styles - https://stackoverflow.com/questions/71637137/remove-property-from-wordpress-core-gutenberg-block
 	wp.blocks.unregisterBlockStyle('core/image', 'default');
 	wp.blocks.unregisterBlockStyle('core/image', 'rounded');
@@ -86,6 +89,7 @@ function modifyCoreBlocks(settings, name) {
 	// Core heading block modifications
 	// TODO - removing headings from attr and supports alone doesn't do the trick
 	if (name === "core/heading") {
+        console.log({ settings, name });
         return assign({}, settings, {
             attributes: merge(settings.attributes, {
                 content: {
@@ -101,7 +105,7 @@ function modifyCoreBlocks(settings, name) {
 	
     // Remove color support from blocks
 	if (name === 'core/table') {
-        console.log({ settings, name });
+        // console.log({ settings, name });
         return assign({}, settings, {
             supports: merge(settings.supports, {
                 color: false,

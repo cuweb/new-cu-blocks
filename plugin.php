@@ -16,7 +16,7 @@
 /**
  * Add script to the block editor.
  */
-function remove_block_style()
+function enqueue_scripts_styles()
 {
     wp_register_script(
         'block-config',
@@ -25,7 +25,7 @@ function remove_block_style()
     );
     register_block_type('remove/block-style', ['editor_script' => 'block-config']); // register block editor script.
 }
-add_action('init', 'remove_block_style');
+add_action('init', 'enqueue_scripts_styles');
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -108,7 +108,7 @@ function set_allowed_blocks($final_blocks, $post)
     // Register custom blocks
     $custom_blocks = [
         'starter-block/feature-card',
-        'starter-block/hero-image'
+        'starter-block/hero-image',
     ];
 
     // Register admin specific blocks
