@@ -1,5 +1,5 @@
 wp.domReady(() => {
-	// Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
+    // Dump block styles to the console - https://soderlind.no/hide-block-styles-in-gutenberg/
 	// wp.blocks.getBlockTypes().forEach((block) => {
 	// 	if (_.isArray(block['styles'])) {
 	// 		console.log(block.name, _.pluck(block['styles'], 'name'));
@@ -7,6 +7,7 @@ wp.domReady(() => {
 	// });
 
 	const allowedCoreBlocks = [
+        'core/block',
 		'core/button',
 		'core/buttons',
 		'core/column',
@@ -40,6 +41,7 @@ wp.domReady(() => {
 		'starter-block/hero-image'
 	];
 
+    // Wrap in check if current user is admin
 	const allowedAdminBlocks = [
 		'core/html',
 		'core/shortcode'
@@ -130,11 +132,18 @@ function modifyCoreBlocks(settings, name) {
 	// TODO - doesn't work, how to remove h1, 5, 6
 	// Core heading block modifications
 	if (name === "core/heading") {
-		return lodash.assign({}, settings, {
-			supports: lodash.assign({}, settings.supports, {
-				__experimentalSelector: "h2,h3,h4"
-			})
-		});
+        console.log({ settings, name });
+        return lodash.assign({}, settings, {
+            attributes: lodash.merge(settings.attributes, {
+                content: {
+                    selector: "h2,h3,h4",
+                },
+            }),
+            supports: lodash.merge(settings.supports, {
+                color: false,
+                __experimentalSelector: "h2,h3,h4"
+            })
+        });
 	}
 
 	// Core list block modifications
