@@ -6,54 +6,6 @@ wp.domReady(() => {
 	// 	}
 	// });
 
-	const allowedCoreBlocks = [
-        'core/block',
-		'core/button',
-		'core/buttons',
-		'core/column',
-		'core/columns',
-		'core/cover',
-		'core/embed',
-		'core/gallery',
-		'core/heading',
-		'core/image',
-		'core/latest-posts',
-		'core/list',
-		'core/list-item',
-		'core/media-text',
-		'core/paragraph',
-		'core/quote',
-		'core/table',
-		// All below are needed for query loop
-		// 'core/query',
-		// 'core/post-title',
-		// 'core/post-date',
-		// 'core/post-template',
-		// 'core/query-pagination',
-		// 'core/query-pagination-previous',
-		// 'core/query-pagination-numbers',
-		// 'core/query-pagination-next',
-		// 'core/query-no-results',
-		// 'core/missing',
-	];
-
-	const allowedCustomBlocks = [
-		'starter-block/feature-card',
-		'starter-block/hero-image'
-	];
-
-    // TODO: Wrap in check if current user is admin
-	const allowedAdminBlocks = [
-		'core/html',
-		'core/shortcode'
-	];
-
-	const allowedPluginBlocks = [
-		// 'gravityforms/form'
-	];
-
-	const allowedBlocks = allowedCoreBlocks.concat(allowedCustomBlocks, allowedAdminBlocks, allowedPluginBlocks);
-
 	const allowedEmbedBlocks = [
 		'instagram',
         'soundcloud',
@@ -61,13 +13,6 @@ wp.domReady(() => {
 		'youtube',
 		'vimeo'
 	];
-
-	// Set allowed blocks
-	wp.blocks.getBlockTypes().forEach(function (coreBlocks) {
-		if (allowedBlocks.indexOf(coreBlocks.name) === -1) {
-			wp.blocks.unregisterBlockType(coreBlocks.name);
-		}
-	});
 
 	// Set allowed embed blocks - https://wordpress.stackexchange.com/questions/393243/limit-gutenberg-blocks-available-to-users-to-choose-from
 	wp.blocks.getBlockType('core/embed').variations.forEach(function (blockVariation) {
