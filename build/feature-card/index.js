@@ -222,7 +222,7 @@ module.exports = window["wp"]["i18n"];
   \*************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"starter-block/feature-card","version":"0.1.0","title":"Feature Card","category":"media","icon":"align-center","description":"Example of a feature card block","supports":{"html":false},"textdomain":"feature-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"custom-block/feature-card","version":"0.1.0","title":"Feature Card","category":"media","icon":"align-center","description":"Example of a feature card block","supports":{"html":false},"textdomain":"feature-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

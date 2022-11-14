@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "starter-block/hero-image",
+  "name": "custom-block/hero-image",
   "version": "0.1.0",
   "title": "Hero Image",
   "category": "media",
