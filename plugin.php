@@ -27,7 +27,6 @@ function remove_block_style()
 }
 add_action('init', 'remove_block_style');
 
-
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
  * Behind the scenes, it registers also all assets so they can be enqueued
@@ -41,7 +40,6 @@ function create_block_test_block_init()
     register_block_type(__DIR__ . '/build/hero-image');
 }
 add_action('init', 'create_block_test_block_init');
-
 
 /**
  * Add a block category for listings

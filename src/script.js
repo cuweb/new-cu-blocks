@@ -19,6 +19,7 @@ wp.domReady(() => {
 		'core/image',
 		'core/latest-posts',
 		'core/list',
+		'core/list-item',
 		'core/media-text',
 		'core/paragraph',
 		'core/quote',
@@ -41,7 +42,7 @@ wp.domReady(() => {
 		'starter-block/hero-image'
 	];
 
-    // Wrap in check if current user is admin
+    // TODO: Wrap in check if current user is admin
 	const allowedAdminBlocks = [
 		'core/html',
 		'core/shortcode'
@@ -54,7 +55,8 @@ wp.domReady(() => {
 	const allowedBlocks = allowedCoreBlocks.concat(allowedCustomBlocks, allowedAdminBlocks, allowedPluginBlocks);
 
 	const allowedEmbedBlocks = [
-		'soundcloud',
+		'instagram',
+        'soundcloud',
 		'twitter',
 		'youtube',
 		'vimeo'
@@ -97,14 +99,74 @@ const { addFilter } = wp.hooks;
 const { assign, merge } = lodash;
 
 function modifyCoreBlocks(settings, name) {
+	// Log block options before the return
+	// console.log({ settings, name });
+
+    const bulkModifyBlocks = [
+        "core/paragraph",
+        "core/list",
+        "core/quote",
+    ];
+	
+	// Remove color support from blocks
+	if (bulkModifyBlocks.includes(name)) {
+        return assign({}, settings, {
+            supports: merge(settings.supports, {
+                color: false,
+                typography: false,
+            })
+        });
+	}
+	
+    // Remove color support from blocks
+	if (name === 'core/button') {
+        return assign({}, settings, {
+            supports: merge(settings.supports, {
+                color: false,
+            })
+        });
+	}
+	
+    // Remove color support from blocks
+	if (name === 'core/columns') {
+        return assign({}, settings, {
+            category: "text",
+            supports: merge(settings.supports, {
+                align: false,
+                color: false,
+            })
+        });
+	}
+	
 	// Core heading block modifications
-	// if (name === 'core/columns') {
-	// 	console.log({ settings, name });
-	// }
+	// TODO - removing headings from attr and supports alone doesn't do the trick
+	if (name === "core/heading") {
+        return assign({}, settings, {
+            attributes: merge(settings.attributes, {
+                content: {
+                    selector: "h2,h3,h4",
+                },
+            }),
+            supports: merge(settings.supports, {
+                color: false,
+                __experimentalSelector: "h2,h3,h4"
+            })
+        });
+	}
+	
+    // Remove color support from blocks
+	if (name === 'core/table') {
+        console.log({ settings, name });
+        return assign({}, settings, {
+            supports: merge(settings.supports, {
+                color: false,
+            })
+        });
+	}
 
 	// Core latest posts block modifications - https://wp-qa.com/changing-the-category-for-existing-gutenberg-blocks
 	// if (name === "core/latest-posts") {
-	// 	return lodash.assign({}, settings, {
+	// 	return assign({}, settings, {
 	// 		category: "listings",
 	// 		attributes:{
 	// 			columns: {
@@ -128,75 +190,6 @@ function modifyCoreBlocks(settings, name) {
 	// 		}
 	// 	});
 	// }
-	
-	// TODO - doesn't work, how to remove h1, 5, 6
-	// Core heading block modifications
-	if (name === "core/heading") {
-        console.log({ settings, name });
-        return lodash.assign({}, settings, {
-            attributes: lodash.merge(settings.attributes, {
-                content: {
-                    selector: "h2,h3,h4",
-                },
-            }),
-            supports: lodash.merge(settings.supports, {
-                color: false,
-                __experimentalSelector: "h2,h3,h4"
-            })
-        });
-	}
-
-	// Core list block modifications
-	if (name === 'core/columns') {
-		// console.log({ settings, name });
-		return lodash.assign({}, settings, {
-			category: "text",
-			attributes: lodash.assign({}, settings.attributes, {
-				isStackedOnMobile: false,
-			}),
-			supports: lodash.assign({}, settings.supports, {
-				color: false,
-			})
-		});
-	}
-
-	// Core list block modifications
-	if (name === 'core/button') {
-		return lodash.assign({}, settings, {
-			supports: lodash.assign({}, settings.supports, {
-				color: false,
-				typography: false,
-			}),
-		});
-	}
-
-	// Core list block modifications
-	if (name === 'core/list') {
-		return lodash.assign({}, settings, {
-			supports: lodash.assign({}, settings.supports, {
-				color: false,
-				typography: false,
-			}),
-		});
-	}
-
-	// Core quote block modifications
-	if (name === 'core/quote') {
-		return lodash.assign({}, settings, {
-			supports: lodash.assign({}, settings.supports, {
-				color: false,
-			}),
-		});
-	}
-
-	// Core table block modifications
-	if (name === 'core/table') {
-		return lodash.assign({}, settings, {
-			supports: lodash.assign({}, settings.supports, {
-				color: false,
-			}),
-		});
-	}
 
 	return settings;
 }
