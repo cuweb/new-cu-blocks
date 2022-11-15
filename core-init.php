@@ -1,8 +1,6 @@
 <?php
 /**
  * This file initializes all CU Core components
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 
 // If this file is called directly, abort. //
